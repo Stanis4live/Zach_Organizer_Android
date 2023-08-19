@@ -1,0 +1,84 @@
+#: import utils kivy.utils
+#:import event_calendar event_calendar
+
+
+<HomeScreen>:
+    canvas.before:
+        Color:
+            rgba: (1, 1, 1, 1)
+        Rectangle:
+            source: "icons/main/background.png"
+            size: root.width, root.height
+            pos: self.pos
+
+    BoxLayout:
+        orientation: 'vertical'
+
+        GridLayout:
+            rows: 2
+            cols: 2
+            pos_hint: {"top": .8, "left": 1}
+            size_hint: 1, .5
+
+            ImageButton:
+                source: "icons/home/calendar_icon.png"
+                on_release:
+                    event_calendar.start_calendar_fill()
+                    app.change_screen('event_calendar_screen')
+                    app.previous_screen = "home_screen"
+
+            ImageButton:
+                source: "icons/home/events.png"
+                on_release:
+                    app.change_screen('events_screen')
+                    app.previous_screen = "home_screen"
+
+            ImageButton:
+                source: "icons/home/to_do_list.png"
+                on_release:
+                    app.change_screen('todolist_screen')
+                    app.previous_screen = "home_screen"
+
+            ImageButton:
+                source: "icons/home/projects.png"
+                on_release:
+                    app.change_screen('projects_screen')
+                    app.previous_screen = "home_screen"
+
+        FloatLayout:
+            id: mike_button
+            name: 'mike_button'
+
+            size_hint: 1, .15
+            pos_hint: {"bottom": 1, "left": 1}
+
+
+
+
+
+        FloatLayout:
+            canvas.before:
+                Color:
+                    rgba: (1, 1, 1, 1)
+                Rectangle:
+                    source: "icons/home/down_panel.png"
+                    size: self.width, self.height
+                    pos: self.pos
+            size_hint: 1, .1
+            pos_hint: {"bottom": 1, "left": 1}
+
+            ImageButton:
+                source: "icons/home/notes.png"
+                size_hint: .6, 1
+                pos_hint: {"bottom": .95, "left": 1}
+                on_release:
+                    app.change_screen('notes_screen')
+                    app.previous_screen = "home_screen"
+
+            ImageButton:
+                source: "icons/home/shopping_list.png"
+                size_hint: .6, 1
+                pos_hint: {"top": 1, "right": 1}
+                on_release:
+                    app.change_screen('shopping_list_screen')
+                    app.previous_screen = "home_screen"

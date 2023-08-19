@@ -1,0 +1,126 @@
+#:import projects projects
+
+<ProjectPopup@Popup>
+    auto_dismiss: False
+    size_hint: 1, 0.45
+    pos_hint: {"x": 0, "top": 0.78}
+    title: 'Close without saving'
+    title_align: 'center'
+    BoxLayout:
+        orientation: "vertical"
+        Label:
+            text: "Exit without saving?"
+            font_name: 'fonts/Nunito-Bold.ttf'
+            font_size: 40
+        BoxLayout:
+            orientation: "horizontal"
+            Button:
+                text: "Don't save"
+                font_size: 40
+                size_hint: .3, .4
+                on_release:
+                    root.dismiss()
+                    app.change_screen('projects_screen')
+                    projects.clear_one_project_screen()
+
+            Button:
+                text: 'Stay'
+                font_size: 40
+                size_hint: .3, .4
+                on_release:
+                    root.dismiss()
+
+
+<OneProjectScreen>:
+    canvas.before:
+        Color:
+            rgba: (1, 1, 1, 1)
+        Rectangle:
+            source: "icons/main/background.png"
+            size: root.width, root.height
+            pos: self.pos
+
+    FloatLayout:
+
+        FloatLayout:
+            size_hint: 1, .12
+            pos_hint: {"top": 1, "right": 1}
+
+            FloatLayout:
+                canvas.before:
+                    Color:
+                        rgba: (1, 1, 1, 1)
+                    Rectangle:
+                        source: "icons/events/panel.png"
+                        size: self.width, self.height
+                        pos: self.pos
+                size_hint: .17, 1
+                pos_hint: {"top": 1, "right": .18}
+
+                ImageButton:
+                    size_hint: .5, .5
+                    pos_hint: {"top": .75, "right": .8}
+                    source: "icons/events/back_arrow.png"
+                    on_release:
+                        Factory.ProjectPopup().open()
+
+            FloatLayout:
+                canvas.before:
+                    Color:
+                        rgba: (1, 1, 1, 1)
+                    Rectangle:
+                        source: "icons/events/panel.png"
+                        size: self.width, self.height
+                        pos: self.pos
+                size_hint: .81, 1
+                pos_hint: {"top": 1, "right": 1}
+
+        FloatLayout:
+            size_hint: .88, 1
+            pos_hint: {"top": .88, "right": 1}
+
+            TextInput:
+                background_color: (0,0,0,1)
+                foreground_color: (.72, .39, 0, 1)
+                font_size: 40
+                id: title
+                name: "title"
+                hint_text: 'title'
+                multiline: False
+                size_hint: 1, .08
+                pos_hint: {'top': .98, 'right': .95}
+
+            TextInput:
+                id: description
+                name: "description"
+                background_color: (0,0,0,1)
+                foreground_color: (1, 1, 1, 1)
+                font_size: 40
+                hint_text: 'description'
+                size_hint: 1, .3
+                pos_hint: {'top': .88, 'right': .95}
+
+            Label:
+                id: info_label
+                name: "info_label"
+                font_name: 'fonts/Nunito-Bold.ttf'
+                color: (.72, .39, 0, 1)
+                size_hint: 1, .1
+                pos_hint: {'top': .60, 'right': .95}
+
+
+            ImageButton:
+                size_hint: .55, .1
+                pos_hint: {"top": .22, "right": .43}
+                source: "icons/projects/add.png"
+                on_release:
+                    app.change_screen('supplement_screen')
+                    app.previous_screen = "one_project_screen"
+
+            ImageButton:
+                size_hint: .55, .1
+                pos_hint: {"top": .22, "right": .98}
+                source: "icons/events/save.png"
+                on_release:
+                    projects.save_project()
+

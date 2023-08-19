@@ -1,0 +1,128 @@
+#:include kv/home_screen.kv
+#:include kv/settings_screen.kv
+#:include kv/events_screen.kv
+#:include kv/todolist_screen.kv
+#:include kv/projects_screen.kv
+#:include kv/archive_projects_screen.kv
+#:include kv/one_project_screen.kv
+#:include kv/supplement_screen.kv
+#:include kv/login_screen.kv
+#:include kv/event_calendar_screen.kv
+#:include kv/new_event_screen.kv
+#:include kv/inactive_events_screen.kv
+#:include kv/shopping_list_screen.kv
+#:include kv/notes_screen.kv
+#:include kv/one_note_screen.kv
+#:include kv/login_recovery_screen.kv
+#:include kv/verification_screen.kv
+#:include kv/support_message_screen.kv
+#:include kv/sign_up_screen.kv
+#:include kv/time_screen.kv
+
+
+
+GridLayout:
+    cols: 1
+    FloatLayout:
+        BoxLayout:
+            orientation: 'horizontal'
+            canvas.before:
+                Color:
+                    rgba: (1, 1, 1, 1)
+                Rectangle:
+                    source: "icons/main/top_back.png"
+                    size: self.width, self.height
+                    pos: self.pos
+            rows: 1
+            cols: 3
+            pos_hint: {"top": 1, "left": 1}
+            size_hint: 1, 0.12
+
+            ImageButton:
+                size_hint: 0.19, 1
+                source: "icons/main/home_button.png"
+                on_release:
+                    app.unlock_header('home')
+
+            Image:
+                source: "icons/main/full_logo.png"
+                size_hint: 0.62, 1
+
+            ImageButton:
+                size_hint: 0.19, 1
+                source: "icons/main/settings_button.png"
+                on_release:
+                    app.unlock_header('settings')
+
+
+        ScreenManager:
+            size_hint: 1, 0.88
+            pos_hint: {"top": .88, "left": 1}
+            id: screen_manager
+            LoginScreen:
+                name: "login_screen"
+                id: login_screen
+            HomeScreen:
+                name: "home_screen"
+                id: home_screen
+            SettingsScreen:
+                name: "settings_screen"
+                id: settings_screen
+            EventsScreen:
+                name: "events_screen"
+                id: events_screen
+            TodolistScreen:
+                name: "todolist_screen"
+                id: todolist_screen
+            ProjectsScreen:
+                name: "projects_screen"
+                id: projects_screen
+            ArchiveProjectsScreen:
+                name: "archive_projects_screen"
+                id: archive_projects_screen
+            OneProjectScreen:
+                name: "one_project_screen"
+                id: one_project_screen
+            SupplementScreen:
+                name: "supplement_screen"
+                id: supplement_screen
+            EventCalendarScreen:
+                name: "event_calendar_screen"
+                id: event_calendar_screen
+            NewEventScreen:
+                name: "new_event_screen"
+                id: new_event_screen
+            InactiveEventsScreen:
+                name: "inactive_events_screen"
+                id: inactive_events_screen
+            ShoppingListScreen:
+                name: "shopping_list_screen"
+                id: shopping_list_screen
+            NotesScreen:
+                name: "notes_screen"
+                id: notes_screen
+            OneNoteScreen:
+                name: "one_note_screen"
+                id: one_note_screen
+            LoginRecoveryScreen:
+                name: "login_recovery_screen"
+                id: login_recovery_screen
+            VerificationScreen:
+                name: "verification_screen"
+                id: verification_screen
+            SupportMessageScreen:
+                name: "support_message_screen"
+                id: support_message_screen
+            SignUpScreen:
+                name: "sign_up_screen"
+                id: sign_up_screen
+            TimeScreen:
+                name: "time_screen"
+                id: time_screen
+
+
+
+
+
+
+

@@ -1,0 +1,4 @@
+venv/
+configuration.py
+verification.txt
+refresh_token.txt

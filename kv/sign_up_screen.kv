@@ -1,0 +1,112 @@
+<SignUpScreen>:
+    canvas.before:
+        Color:
+            rgba: (1, 1, 1, 1)
+        Rectangle:
+            source: "icons/login/zach_back.png"
+            size: root.width, root.height
+            pos: self.pos
+
+    FloatLayout:
+
+        FloatLayout:
+            size_hint: 1, .12
+            pos_hint: {"top": 1, "right": 1}
+
+            FloatLayout:
+                canvas.before:
+                    Color:
+                        rgba: (1, 1, 1, 1)
+                    Rectangle:
+                        source: "icons/events/panel.png"
+                        size: self.width, self.height
+                        pos: self.pos
+                size_hint: .17, 1
+                pos_hint: {"top": 1, "right": .18}
+
+                ImageButton:
+                    size_hint: .5, .5
+                    pos_hint: {"top": .75, "right": .8}
+                    source: "icons/events/back_arrow.png"
+                    on_release:
+                        app.change_screen('login_screen')
+
+            FloatLayout:
+                canvas.before:
+                    Color:
+                        rgba: (1, 1, 1, 1)
+                    Rectangle:
+                        source: "icons/events/panel.png"
+                        size: self.width, self.height
+                        pos: self.pos
+                size_hint: .81, 1
+                pos_hint: {"top": 1, "right": 1}
+
+        Image:
+            size_hint: .28, .1
+            pos_hint: {"top": .8, "right": .66}
+            source: "icons/login/logo.png"
+
+        TextInput:
+            id: sign_up_email
+            multiline: False
+            hint_text: 'email'
+            valign: 'middle'
+            background_color: (0,0,0,1)
+            foreground_color: (1, 1, 1, 1)
+            size_hint: .9, .08
+            pos_hint: {'top': .7, 'right': .95}
+
+        TextInput:
+            id: sign_up_password
+            multiline: False
+            password: True
+            hint_text: 'password'
+            valign: 'middle'
+            background_color: (0,0,0,1)
+            foreground_color: (1, 1, 1, 1)
+            size_hint: .9, .08
+            pos_hint: {'top': .6, 'right': .95}
+
+        TextInput:
+            id: confirm_password
+            multiline: False
+            password: True
+            hint_text: 'confirm password'
+            valign: 'middle'
+            background_color: (0,0,0,1)
+            foreground_color: (1, 1, 1, 1)
+            size_hint: .9, .08
+            pos_hint: {'top': .5, 'right': .95}
+
+        CheckBox:
+            id: show_password
+            name: 'show_password'
+            size_hint: .1, .1
+            pos_hint: {"top": .42, "right": .12}
+            active: False
+            on_active:
+                my_base.password_visibility(state=self.active, action='sign_up')
+
+        Label:
+            font_name: 'fonts/Nunito-Bold.ttf'
+            text: 'show password'
+            color: (1, 1, 1, 1)
+            size_hint: .3, .1
+            pos_hint: {'top': .42, 'right': .45}
+
+        ImageButton:
+            id: sign_up_button
+            source: "icons/login/sign_up_white.png"
+            size_hint: .4, .1
+            pos_hint: {'top': .3, 'right': .33}
+            on_release:
+                self.source = "icons/login/sign_up_blue.png"
+                app.my_base.sign_up(email=sign_up_email.text, password=sign_up_password.text, confirm_password=confirm_password.text)
+
+        Label:
+            id: sign_up_message
+            font_name: 'fonts/Nunito-Bold.ttf'
+            color: (.72, .39, 0, 1)
+            size_hint: .8, .1
+            pos_hint: {'top': .2, 'right': .9}

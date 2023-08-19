@@ -1,0 +1,142 @@
+#:import tasks tasks
+
+<TasksPopup@Popup>
+    auto_dismiss: False
+    size_hint: 1, 0.45
+    pos_hint: {"x": 0, "top": 0.78}
+    title: 'Add new task'
+    title_align: 'center'
+    BoxLayout:
+        orientation: "vertical"
+        TextInput:
+            id: new_task
+            name: "new_task"
+            hint_text: 'description'
+            background_color: (0,0,0,1)
+            foreground_color: (1, 1, 1, 1)
+            font_size: 40
+            size_hint: 1, .7
+            pos_hint: {'top': .75, 'right': 1}
+        BoxLayout:
+            size_hint: 1, .3
+            pos_hint: {'top': .3, 'right': 1}
+            orientation: "horizontal"
+            Button:
+                text: 'Back'
+                font_size: 40
+                size_hint: .3, .7
+                on_release:
+                    root.dismiss()
+                    app.change_screen('todolist_screen')
+            Button:
+                text: 'Add'
+                font_size: 40
+                size_hint: .3, .7
+                on_release:
+                    tasks.save_new_task(new_task.text)
+                    root.dismiss()
+
+<TodolistScreen>:
+    canvas.before:
+        Color:
+            rgba: (1, 1, 1, 1)
+        Rectangle:
+            source: "icons/main/background.png"
+            size: root.width, root.height
+            pos: self.pos
+
+    FloatLayout:
+
+        FloatLayout:
+            size_hint: 1, .12
+            pos_hint: {"top": 1, "right": 1}
+
+            FloatLayout:
+                canvas.before:
+                    Color:
+                        rgba: (1, 1, 1, 1)
+                    Rectangle:
+                        source: "icons/events/panel.png"
+                        size: self.width, self.height
+                        pos: self.pos
+                size_hint: .17, 1
+                pos_hint: {"top": 1, "right": .18}
+
+                ImageButton:
+                    size_hint: .5, .5
+                    pos_hint: {"top": .75, "right": .8}
+                    source: "icons/events/back_arrow.png"
+                    on_release:
+                        app.change_screen(app.previous_screen)
+                        app.previous_screen = "todolist_screen"
+
+            FloatLayout:
+                canvas.before:
+                    Color:
+                        rgba: (1, 1, 1, 1)
+                    Rectangle:
+                        source: "icons/events/panel.png"
+                        size: self.width, self.height
+                        pos: self.pos
+                size_hint: .81, 1
+                pos_hint: {"top": 1, "right": 1}
+
+                ImageButton:
+                    size_hint: .18, .6
+                    pos_hint: {"top": .8, "right": .95}
+                    source: "icons/events/add.png"
+                    on_release:
+                        Factory.TasksPopup().open()
+
+                Label:
+                    text: 'Add new task'
+                    font_name: 'fonts/Nunito-Bold.ttf'
+                    size_hint: .18, .7
+                    pos_hint: {"top": .85, "right": .65}
+
+                ImageButton:
+                    size_hint: .18, .6
+                    pos_hint: {"top": .8, "right": .2}
+                    source: "icons/tasks/delete_tasks.png"
+                    on_release:
+                        tasks.delete_all_completed_tasks()
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: 1, .09
+            pos_hint: {"top": .88, "right": 1}
+
+            ImageButton:
+                id: show_all
+                name: 'show_all'
+                pos_hint: {"top": 1, "left": 1}
+                source: "icons/tasks/show_all_select.png"
+                on_release:
+                    self.source = "icons/tasks/show_all_select.png"
+                    upcoming.source = "icons/tasks/upcoming_unselect.png"
+                    tasks.Task.task_sort = None
+                    tasks.refill_tasks_layouts(tasks.Task.task_sort)
+
+            ImageButton:
+                id: upcoming
+                name: 'upcoming'
+                pos_hint: {"top": 1, "right": 1}
+                source: "icons/tasks/upcoming_unselect.png"
+                on_release:
+                    self.source = "icons/tasks/upcoming_select.png"
+                    show_all.source = "icons/tasks/show_all_unselect.png"
+                    tasks.Task.task_sort = 'Actual'
+                    tasks.refill_tasks_layouts(tasks.Task.task_sort)
+
+
+        ScrollView:
+            pos_hint: {"top": .79, "left": 1}
+            size_hint: 1, .79
+            GridLayout:
+                id: tasks_layout
+                name: "tasks_layout"
+                cols: 1
+                size_hint_y: None
+                height: self.minimum_height
+                row_default_height: '100dp'
+                row_fource_default: True

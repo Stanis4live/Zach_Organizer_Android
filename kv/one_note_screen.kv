@@ -1,0 +1,168 @@
+#:import notes notes
+
+<NotesToProjPopup@ModalView>
+    auto_dismiss: False
+    size_hint: .9, 0.45
+    pos_hint: {"x": .05, "top": 0.78}
+    background_color: 0,0,0,0
+    title: 'Chose the project'
+    background_normal: ''
+    canvas.before:
+        Color:
+            rgba: 0.5, 0.5, 0.5, 1
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    BoxLayout:
+        orientation: "vertical"
+        Label:
+            size_hint: 1, .1
+            text: "Chose the project"
+            font_name: 'fonts/Nunito-Bold.ttf'
+            font_size: 30
+        ScrollView:
+            #do_scroll_x: False
+            GridLayout:
+                id: container2
+                cols: 1
+                size_hint: None, None
+                width: root.width
+                height: self.minimum_height  # let the GridLayout set its own height as needeed
+                pos_hint: {'center_x': .5, 'center_y': .5}
+        BoxLayout:
+            orientation: "horizontal"
+            size_hint: .5, .2
+            pos_hint: {"x": 0.26, "top": 0.3}
+            Button:
+                text: 'Cancel'
+                font_size: 40
+                size_hint: .3, .9
+                on_release:
+                    root.dismiss()
+
+
+<NotePopup@Popup>
+    auto_dismiss: False
+    size_hint: 1, 0.45
+    pos_hint: {"x": 0, "top": 0.78}
+    title: 'Close without saving'
+    title_align: 'center'
+    BoxLayout:
+        orientation: "vertical"
+        Label:
+            text: "Exit without saving?"
+            font_name: 'fonts/Nunito-Bold.ttf'
+            font_size: 40
+        BoxLayout:
+            orientation: "horizontal"
+            Button:
+                text: "Don't save"
+                font_size: 40
+                size_hint: .3, .4
+                on_release:
+                    root.dismiss()
+                    app.change_screen('notes_screen')
+                    notes.clear_one_note_screen()
+
+            Button:
+                text: 'Stay'
+                font_size: 40
+                size_hint: .3, .4
+                on_release:
+                    root.dismiss()
+
+<OneNoteScreen>:
+    canvas.before:
+        Color:
+            rgba: (1, 1, 1, 1)
+        Rectangle:
+            source: "icons/main/background.png"
+            size: root.width, root.height
+            pos: self.pos
+
+    FloatLayout:
+
+        FloatLayout:
+            size_hint: 1, .12
+            pos_hint: {"top": 1, "right": 1}
+
+            FloatLayout:
+                canvas.before:
+                    Color:
+                        rgba: (1, 1, 1, 1)
+                    Rectangle:
+                        source: "icons/events/panel.png"
+                        size: self.width, self.height
+                        pos: self.pos
+                size_hint: .17, 1
+                pos_hint: {"top": 1, "right": .18}
+
+                ImageButton:
+                    size_hint: .5, .5
+                    pos_hint: {"top": .75, "right": .8}
+                    source: "icons/events/back_arrow.png"
+                    on_release:
+                        Factory.NotePopup().open()
+
+            FloatLayout:
+                canvas.before:
+                    Color:
+                        rgba: (1, 1, 1, 1)
+                    Rectangle:
+                        source: "icons/events/panel.png"
+                        size: self.width, self.height
+                        pos: self.pos
+                size_hint: .81, 1
+                pos_hint: {"top": 1, "right": 1}
+
+        FloatLayout:
+            size_hint: .88, 1
+            pos_hint: {"top": .88, "right": 1}
+
+            TextInput:
+                id: description
+                name: "description"
+                background_color: (0,0,0,1)
+                foreground_color: (1, 1, 1, 1)
+                font_size: 40
+                hint_text: 'note'
+                size_hint: 1, .4
+                pos_hint: {'top': .98, 'right': .95}
+
+            Label:
+                id: info_label
+                name: "info_label"
+                color: (.72, .39, 0, 1)
+                font_name: 'fonts/Nunito-Bold.ttf'
+                size_hint: 1, .1
+                pos_hint: {'top': .60, 'right': .95}
+
+
+            ImageButton:
+                id: transfer
+                name: 'transfer'
+                size_hint: .55, .1
+                pos_hint: {"top": .22, "right": .43}
+                source: "icons/notes/transfer.png"
+                on_release:
+                    notes.dropdown_menu(description.text)
+
+            ImageButton:
+                size_hint: .55, .1
+                pos_hint: {"top": .22, "right": .98}
+                source: "icons/events/save.png"
+                on_release:
+                    notes.save_note()
+
+
+<ProjectsButton@Button>
+
+    size_hint_y: None
+    height: 60
+    canvas.before:
+        Color:
+            rgba: (1, 1, 1, 1)
+        Rectangle:
+            source: "icons/main/background.png"
+            size: self.size
+            pos: self.pos

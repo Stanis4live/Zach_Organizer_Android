@@ -1,0 +1,419 @@
+#:import my_base my_base
+<SettingsPopup@ModalView>
+    auto_dismiss: False
+    size_hint: .9, 0.7
+    pos_hint: {"x": .05, "top": 0.78}
+    background_color: 0,0,0,0
+    title: 'Chose your timezone'
+    background_normal: ''
+    canvas.before:
+        Color:
+            rgba: 0.5, 0.5, 0.5, 1
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    BoxLayout:
+        orientation: "vertical"
+        Label:
+            size_hint: 1, .1
+            text: "Chose your timezone"
+            font_name: 'fonts/Nunito-Bold.ttf'
+            font_size: 40
+        ScrollView:
+            #do_scroll_x: False
+            GridLayout:
+                id: container1
+                cols: 1
+                size_hint: None, None
+                width: root.width
+                height: self.minimum_height  # let the GridLayout set its own height as needeed
+                pos_hint: {'center_x': .5, 'center_y': .5}
+        BoxLayout:
+            orientation: "horizontal"
+            size_hint: .5, .15
+            pos_hint: {"x": 0.26, "top": 0.3}
+            Button:
+                text: 'Cancel'
+                font_size: 40
+                size_hint: .3, .9
+                on_release:
+                    root.dismiss()
+
+
+
+<SettingsScreen>:
+    canvas.before:
+        Color:
+            rgba: (1, 1, 1, 1)
+        Rectangle:
+            source: "icons/main/background.png"
+            size: root.width, root.height
+            pos: self.pos
+
+    FloatLayout:
+
+        FloatLayout:
+            size_hint: 1, .12
+            pos_hint: {"top": 1, "right": 1}
+
+            FloatLayout:
+                canvas.before:
+                    Color:
+                        rgba: (1, 1, 1, 1)
+                    Rectangle:
+                        source: "icons/events/panel.png"
+                        size: self.width, self.height
+                        pos: self.pos
+                size_hint: .17, 1
+                pos_hint: {"top": 1, "right": .18}
+
+                ImageButton:
+                    size_hint: .5, .5
+                    pos_hint: {"top": .75, "right": .8}
+                    source: "icons/events/back_arrow.png"
+                    on_release:
+                        app.change_screen(app.previous_screen)
+                        app.previous_screen = "settings_screen"
+
+            FloatLayout:
+                canvas.before:
+                    Color:
+                        rgba: (1, 1, 1, 1)
+                    Rectangle:
+                        source: "icons/events/panel.png"
+                        size: self.width, self.height
+                        pos: self.pos
+                size_hint: .81, 1
+                pos_hint: {"top": 1, "right": 1}
+
+                Label:
+                    text: "Settings"
+                    font_size: '16sp'
+                    font_name: 'fonts/Nunito-Bold.ttf'
+                    size_hint: .18, .7
+                    pos_hint: {"top": .85, "right": .3}
+
+                ImageButton:
+                    source: "icons/settings/logout.png"
+                    size_hint: .18, .6
+                    pos_hint: {"top": .8, "right": .95}
+                    on_release:
+                        my_base.logout()
+
+        Label:
+            canvas.before:
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+                    source: 'icons/events/event_back_panel.png'
+            id: attention
+            name: 'attention'
+            text: "To receive reminders, you must fill in the timezone and phone fields.!"
+            text_size: self.size
+            font_name: 'fonts/Nunito-Bold.ttf'
+            color: (.72, .39, 0, 1)
+            halign: "center"
+            valign: "middle"
+            size_hint: 1, .07
+            pos_hint: {"top": .88, "left": 1}
+
+        ScrollView:
+            pos_hint: {"top": .80, "left": 1}
+            size_hint: 1, .78
+            GridLayout:
+                cols: 1
+                size_hint_y: None
+                pos_hint: {"top": 1, "left": .8}
+                height: self.minimum_height
+                row_default_height: '60dp'
+                row_fource_default: True
+
+                FloatLayout:
+                    canvas.before:
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
+                            source: 'icons/events/event_back_panel.png'
+
+                    ImageButton:
+                        source: "icons/settings/edit.png"
+                        size_hint: .25, .7
+                        pos_hint: {"top": .9, "right": 1}
+                        on_release:
+                            settings.modal_settings_window(command='user_name')
+
+                    Label:
+                        text: "First Name:"
+                        color: (.72, .39, 0, 1)
+                        font_name: 'fonts/Nunito-Bold.ttf'
+                        size_hint: .3, .58
+                        pos_hint: {"top": .8, "left": 1}
+
+
+                    Label:
+                        id: user_name
+                        name: "user_name"
+                        font_name: 'fonts/Nunito-Bold.ttf'
+                        size_hint: .5, .58
+                        pos_hint: {"top": .8, "right": .6}
+                        text: ""
+
+                FloatLayout:
+                    canvas.before:
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
+                            source: 'icons/events/event_back_panel.png'
+
+                    ImageButton:
+                        source: "icons/settings/edit.png"
+                        size_hint: .25, .7
+                        pos_hint: {"top": .9, "right": 1}
+                        on_release:
+                            settings.modal_settings_window(command='user_lname')
+
+                    Label:
+                        text: "Last Name:"
+                        color: (.72, .39, 0, 1)
+                        font_name: 'fonts/Nunito-Bold.ttf'
+                        size_hint: .3, .58
+                        pos_hint: {"top": .8, "left": 1}
+
+                    Label:
+                        id: user_lname
+                        name: "user_lname"
+                        font_name: 'fonts/Nunito-Bold.ttf'
+                        size_hint: .5, .58
+                        pos_hint: {"top": .8, "right": .62}
+                        text: ""
+
+                FloatLayout:
+                    canvas.before:
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
+                            source: 'icons/events/event_back_panel.png'
+
+                    Image:
+                        source: "icons/events/s_b_d_select.png"
+                        size_hint: .22, .4
+                        pos_hint: {"top": .72, "right": 1}
+
+                    Label:
+                        text: "Email:        "
+                        color: (.72, .39, 0, 1)
+                        font_name: 'fonts/Nunito-Bold.ttf'
+                        size_hint: .3, .58
+                        pos_hint: {"top": .8, "left": 1}
+
+                    Label:
+                        id: user_email
+                        font_name: 'fonts/Nunito-Bold.ttf'
+                        name: "user_email"
+                        size_hint: .5, .58
+                        pos_hint: {"top": .8, "right": .74}
+                        text: ""
+
+                FloatLayout:
+                    canvas.before:
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
+                            source: 'icons/events/event_back_panel.png'
+
+                    ImageButton:
+                        source: "icons/settings/edit.png"
+                        size_hint: .25, .7
+                        pos_hint: {"top": .9, "right": 1}
+                        on_release:
+                            settings.modal_settings_window(command='telephone')
+
+                    ImageButton:
+                        source: "icons/settings/verify.png"
+                        size_hint: .25, .7
+                        pos_hint: {"top": .88, "right": .75}
+                        on_release:
+                            settings.modal_settings_window(command='verification')
+
+                    Label:
+                        text: "Telephone: "
+                        color: (.72, .39, 0, 1)
+                        font_name: 'fonts/Nunito-Bold.ttf'
+                        size_hint: .3, .58
+                        pos_hint: {"top": 1, "left": 1}
+
+                    Label:
+                        id: user_telephone
+                        name: "user_telephone"
+                        font_name: 'fonts/Nunito-Bold.ttf'
+                        size_hint: .5, .58
+                        pos_hint: {"top": .53, "right": .47}
+                        text: ""
+
+                FloatLayout:
+                    canvas.before:
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
+                            source: 'icons/events/event_back_panel.png'
+
+                    ImageButton:
+                        source: "icons/settings/edit.png"
+                        size_hint: .25, .7
+                        pos_hint: {"top": .9, "right": 1}
+                        on_release:
+                            settings.reset_password(login_email.text)
+
+                    Label:
+                        text: "Password:"
+                        color: (.72, .39, 0, 1)
+                        font_name: 'fonts/Nunito-Bold.ttf'
+                        size_hint: .3, .58
+                        pos_hint: {"top": .8, "left": 1}
+
+                    Label:
+                        text: "******"
+                        font_name: 'fonts/Nunito-Bold.ttf'
+                        size_hint: .5, .58
+                        pos_hint: {"top": .8, "right": .62}
+
+
+
+                FloatLayout:
+                    canvas.before:
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
+                            source: 'icons/events/event_back_panel.png'
+
+                    ImageButton:
+                        source: "icons/settings/change.png"
+                        size_hint: .25, .7
+                        pos_hint: {"top": .9, "right": 1}
+                        on_release:
+                            settings.popup_func()
+
+                    Label:
+                        text: "Time Zone:"
+                        color: (.72, .39, 0, 1)
+                        font_name: 'fonts/Nunito-Bold.ttf'
+                        size_hint: .3, .58
+                        pos_hint: {"top": .8, "left": 1}
+
+                    Label:
+                        id: timezone
+                        name: "timezone"
+                        font_name: 'fonts/Nunito-Bold.ttf'
+                        size_hint: .5, .58
+                        pos_hint: {"top": .8, "right": .72}
+                        text: ""
+
+                FloatLayout:
+                    canvas.before:
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
+                            source: 'icons/events/event_back_panel.png'
+
+                    Label:
+                        text: "Zach will remind you of events on your phone"
+                        font_size: '13sp'
+                        text_size: self.size
+                        halign: "center"
+                        valign: "middle"
+                        font_name: 'fonts/Nunito-Bold.ttf'
+                        size_hint: 1, .3
+                        pos_hint: {"top": .9, "left": 1}
+
+                    Label:
+                        text: "SMS reminder"
+                        color: (.72, .39, 0, 1)
+                        font_name: 'fonts/Nunito-Bold.ttf'
+                        size_hint: .3, .58
+                        pos_hint: {"top": .53, "right": .34}
+
+                    CheckBox:
+                        id: sms_reminder
+                        name: 'sms_reminder'
+                        size_hint: .2, .5
+                        pos_hint: {"top": .53, "right": .95}
+                        active: True
+                        on_active:
+                            settings.set_sms_reminder(self.active)
+
+                FloatLayout:
+                    canvas.before:
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
+                            source: 'icons/events/event_back_panel.png'
+
+                    Label:
+                        text: "Zach will remind you of events on your current email"
+                        font_size: '13sp'
+                        text_size: self.size
+                        halign: "center"
+                        valign: "middle"
+                        font_name: 'fonts/Nunito-Bold.ttf'
+                        size_hint: 1, .5
+                        pos_hint: {"top": .9, "left": 1}
+
+                    Label:
+                        text: "email reminder"
+                        color: (.72, .39, 0, 1)
+                        font_name: 'fonts/Nunito-Bold.ttf'
+                        size_hint: .3, .58
+                        pos_hint: {"top": .53, "right": .35}
+
+                    CheckBox:
+                        id: email_reminder
+                        name: 'email_reminder'
+                        size_hint: .2, .5
+                        pos_hint: {"top": .53, "right": .95}
+                        active: True
+                        on_active:
+                            settings.set_email_reminder(self.active)
+
+                FloatLayout:
+                    canvas.before:
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
+                            source: 'icons/events/event_back_panel.png'
+
+                    LabelButton:
+                        text: '[u]Write a message to support[/u]'
+                        markup: True
+                        color: (35/255, 110/255, 238/255, 1)
+                        size_hint: .9, .1
+                        pos_hint: {'top': .5, 'left': .95}
+                        on_release:
+                            app.change_screen('support_message_screen')
+                            app.previous_screen = "settings_screen"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<MyButton@Button>
+
+    size_hint_y: None
+    height: 60
+    canvas.before:
+        Color:
+            rgba: (1, 1, 1, 1)
+        Rectangle:
+            source: "icons/main/background.png"
+            size: self.size
+            pos: self.pos

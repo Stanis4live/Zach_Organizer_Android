@@ -1,0 +1,89 @@
+<ProjectsScreen>:
+    canvas.before:
+        Color:
+            rgba: (1, 1, 1, 1)
+        Rectangle:
+            source: "icons/main/background.png"
+            size: root.width, root.height
+            pos: self.pos
+
+
+    FloatLayout:
+
+        FloatLayout:
+            size_hint: 1, .12
+            pos_hint: {"top": 1, "right": 1}
+
+            FloatLayout:
+                canvas.before:
+                    Color:
+                        rgba: (1, 1, 1, 1)
+                    Rectangle:
+                        source: "icons/events/panel.png"
+                        size: self.width, self.height
+                        pos: self.pos
+                size_hint: .17, 1
+                pos_hint: {"top": 1, "right": .18}
+
+                ImageButton:
+                    size_hint: .5, .5
+                    pos_hint: {"top": .75, "right": .8}
+                    source: "icons/events/back_arrow.png"
+                    on_release:
+                        app.change_screen(app.previous_screen)
+                        app.previous_screen = "projects_screen"
+
+            FloatLayout:
+                canvas.before:
+                    Color:
+                        rgba: (1, 1, 1, 1)
+                    Rectangle:
+                        source: "icons/events/panel.png"
+                        size: self.width, self.height
+                        pos: self.pos
+                size_hint: .81, 1
+                pos_hint: {"top": 1, "right": 1}
+
+                Label:
+                    text: 'New project'
+                    font_name: 'fonts/Nunito-Bold.ttf'
+                    size_hint: .18, .7
+                    pos_hint: {"top": .85, "right": .65}
+
+                ImageButton:
+                    size_hint: .18, .6
+                    pos_hint: {"top": .8, "right": .95}
+                    source: "icons/events/add.png"
+                    on_release:
+                        app.change_screen('one_project_screen')
+                        app.previous_screen = 'projects_screen'
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: 1, .09
+            pos_hint: {"top": .88, "right": 1}
+
+            ImageButton:
+                pos_hint: {"top": 1, "left": 1}
+                source: "icons/projects/current_projects_unselect.png"
+                on_release:
+                    pass
+
+            ImageButton:
+                pos_hint: {"top": 1, "right": 1}
+                source: "icons/projects/projects_archive_select.png"
+                on_release:
+                    app.change_screen('archive_projects_screen')
+
+
+        ScrollView:
+            pos_hint: {"top": .79, "left": 1}
+            size_hint: 1, .79
+            GridLayout:
+                id: projects_layout
+                name: "projects_layout"
+                cols: 1
+                size_hint_y: None
+                height: self.minimum_height
+                row_default_height: '100dp'
+                row_fource_default: True

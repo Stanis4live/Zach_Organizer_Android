@@ -1,0 +1,45 @@
+#:import my_base my_base
+#:import constants constants
+
+<VerificationScreen>:
+    canvas.before:
+        Color:
+            rgba: (1, 1, 1, 1)
+        Rectangle:
+            source: "icons/login/zach_back.png"
+            size: root.width, root.height
+            pos: self.pos
+
+    FloatLayout:
+
+        Label:
+            text: 'To complete your registration, please follow the link that was sent to your email.'
+            text_size: self.size
+            halign: "center"
+            valign: "middle"
+            font_name: 'fonts/Nunito-Bold.ttf'
+            size_hint: 1, .2
+            pos_hint: {'top': .7, 'right': 1}
+
+        ImageButton:
+            source: "icons/login/back_to_the_login.png"
+            size_hint: .7, .1
+            pos_hint: {'top': .3, 'right': .867}
+            on_release:
+                app.change_screen('login_screen')
+
+        ImageButton:
+            source: "icons/login/enter.png"
+            size_hint: .7, .1
+            pos_hint: {'top': .21, 'right': .867}
+            on_release:
+                app.verification_restart_app()
+
+        ImageButton:
+            source: "icons/login/do_not_get_email.png"
+            size_hint: .7, .1
+            pos_hint: {'top': .12, 'right': .867}
+            on_release:
+                my_base.exchange_refresh_token()
+                my_base.verification_request(constants.ID_TOKEN)
+

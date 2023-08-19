@@ -1,0 +1,73 @@
+<NotesScreen>:
+    canvas.before:
+        Color:
+            rgba: (1, 1, 1, 1)
+        Rectangle:
+            source: "icons/main/background.png"
+            size: root.width, root.height
+            pos: self.pos
+
+    FloatLayout:
+
+        FloatLayout:
+            size_hint: 1, .12
+            pos_hint: {"top": 1, "right": 1}
+
+            FloatLayout:
+                canvas.before:
+                    Color:
+                        rgba: (1, 1, 1, 1)
+                    Rectangle:
+                        source: "icons/events/panel.png"
+                        size: self.width, self.height
+                        pos: self.pos
+                size_hint: .17, 1
+                pos_hint: {"top": 1, "right": .18}
+
+                ImageButton:
+                    size_hint: .5, .5
+                    pos_hint: {"top": .75, "right": .8}
+                    source: "icons/events/back_arrow.png"
+                    on_release:
+                        app.change_screen(app.previous_screen)
+                        app.previous_screen = "notes_screen"
+
+            FloatLayout:
+                canvas.before:
+                    Color:
+                        rgba: (1, 1, 1, 1)
+                    Rectangle:
+                        source: "icons/events/panel.png"
+                        size: self.width, self.height
+                        pos: self.pos
+                size_hint: .81, 1
+                pos_hint: {"top": 1, "right": 1}
+
+            Label
+                text: 'Add note'
+                font_name: 'fonts/Nunito-Bold.ttf'
+                size_hint: .18, .7
+                pos_hint: {"top": .85, "right": .72}
+
+            ImageButton:
+                size_hint: .18, .6
+                pos_hint: {"top": .8, "right": .95}
+                source: "icons/events/add.png"
+                on_release:
+                    notes.clear_one_note_screen()
+                    app.change_screen('one_note_screen')
+                    app.previous_screen = "notes_screen"
+
+        ScrollView:
+            pos_hint: {"top": .88, "left": 1}
+            size_hint: 1, .88
+            GridLayout:
+                id: notes_layout
+                name: "notes_layout"
+                cols: 1
+                size_hint_y: None
+                height: self.minimum_height
+                row_default_height: '150dp'
+                row_fource_default: True
+
+

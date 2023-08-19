@@ -1,0 +1,180 @@
+#:import my_time my_time
+#:import MyTextInput own_classes.MyTextInput
+
+
+
+<TimePopup@Popup>
+    auto_dismiss: False
+    size_hint: 1, 0.45
+    pos_hint: {"x": 0, "top": 0.78}
+    title: 'Close without saving'
+    title_align: 'center'
+    BoxLayout:
+        orientation: "vertical"
+        Label:
+            text: "Exit without saving?"
+            font_name: 'fonts/Nunito-Bold.ttf'
+            font_size: 40
+        BoxLayout:
+            orientation: "horizontal"
+            Button:
+                text: "Don't save"
+                font_size: 40
+                size_hint: .3, .4
+                on_release:
+                    root.dismiss()
+                    app.change_screen('new_event_screen')
+
+            Button:
+                text: 'Stay'
+                font_size: 40
+                size_hint: .3, .4
+                on_release:
+                    root.dismiss()
+
+
+<TimeScreen>:
+    canvas.before:
+        Color:
+            rgba: (1, 1, 1, 1)
+        Rectangle:
+            source: "icons/main/background.png"
+            size: root.width, root.height
+            pos: self.pos
+
+    FloatLayout:
+
+        FloatLayout:
+            size_hint: 1, .12
+            pos_hint: {"top": 1, "right": 1}
+
+            FloatLayout:
+                canvas.before:
+                    Color:
+                        rgba: (1, 1, 1, 1)
+                    Rectangle:
+                        source: "icons/events/panel.png"
+                        size: self.width, self.height
+                        pos: self.pos
+                size_hint: .17, 1
+                pos_hint: {"top": 1, "right": .18}
+
+                ImageButton:
+                    size_hint: .5, .5
+                    pos_hint: {"top": .75, "right": .8}
+                    source: "icons/events/back_arrow.png"
+                    on_release:
+                        Factory.TimePopup().open()
+
+            FloatLayout:
+                canvas.before:
+                    Color:
+                        rgba: (1, 1, 1, 1)
+                    Rectangle:
+                        source: "icons/events/panel.png"
+                        size: self.width, self.height
+                        pos: self.pos
+                size_hint: .81, 1
+                pos_hint: {"top": 1, "right": 1}
+
+        FloatLayout:
+            size_hint: .88, 1
+            pos_hint: {"top": .88, "right": 1}
+
+            Label:
+                text: "Select time"
+                font_name: 'fonts/Nunito-Bold.ttf'
+                color: (1, 1, 1, 1)
+                size_hint: (.2, .1)
+                pos_hint: {"top": 1, "right": .2}
+
+            ImageButton:
+                size_hint: .2, .1
+                pos_hint: {"top": .88, "right": .18}
+                source: "icons/time/arrow_up.png"
+                on_release:
+                    my_time.time_up(text=hour.text, max_value='12', id='hour')
+
+            MyTextInput:
+                id: hour
+                on_size:
+                    self.font_size = self.height * 0.7
+                size_hint: .3, .15
+                pos_hint: {'top': .79, 'right': .22}
+
+            ImageButton:
+                size_hint: .2, .1
+                pos_hint: {"top": .65, "right": .18}
+                source: "icons/time/arrow_down.png"
+                on_release:
+                    my_time.time_down(text=hour.text, max_value='12', id='hour')
+
+            Image:
+                source: 'icons/time/2dop.png'
+                size_hint: (.07, .08)
+                pos_hint: {'top': .76, 'right': .29}
+
+            ImageButton:
+                size_hint: .2, .1
+                pos_hint: {"top": .88, "right": .55}
+                source: "icons/time/arrow_up.png"
+                on_release:
+                    my_time.time_up(text=minute.text, max_value='59', id='minute')
+
+            MyTextInput:
+                id: minute
+                on_size:
+                    self.font_size = self.height * 0.7
+                max_value: 59
+                size_hint: .3, .15
+                pos_hint: {'top': .79, 'right': .59}
+
+            ImageButton:
+                size_hint: .2, .1
+                pos_hint: {"top": .65, "right": .55}
+                source: "icons/time/arrow_down.png"
+                on_release:
+                    my_time.time_down(text=minute.text, max_value='59', id='minute')
+
+            ImageButton:
+                id: am
+                name: 'am'
+                size_hint: .3, .1
+                pos_hint: {"top": .81, "right": .94}
+                source: "icons/time/am_black.png"
+                on_release:
+                    my_time.switch_am_pm(but_name=self.name)
+
+            ImageButton:
+                id: pm
+                name: 'pm'
+                size_hint: .3, .1
+                pos_hint: {"top": .71, "right": .94}
+                source: "icons/time/pm_blue.png"
+                on_release:
+                    my_time.switch_am_pm(but_name=self.name)
+
+
+            Label:
+                id: info_label
+                name: "info_label"
+                font_name: 'fonts/Nunito-Bold.ttf'
+                color: (.72, .39, 0, 1)
+                size_hint: 1, .5
+                background_color: (1, 1, 1, 1)
+                pos_hint: {'top': .6, 'right': .92}
+
+
+            ImageButton:
+                size_hint: .55, .1
+                pos_hint: {"top": .22, "right": .43}
+                source: "icons/projects/back.png"
+                on_release:
+                    Factory.TimePopup().open()
+
+            ImageButton:
+                size_hint: .55, .1
+                pos_hint: {"top": .22, "right": .98}
+                source: "icons/events/save.png"
+                on_release:
+                    my_time.add_time()

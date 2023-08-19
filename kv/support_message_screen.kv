@@ -1,0 +1,47 @@
+#:import settings settings
+
+<SupportMessageScreen>:
+    canvas.before:
+        Color:
+            rgba: (1, 1, 1, 1)
+        Rectangle:
+            source: "icons/main/background.png"
+            size: root.width, root.height
+            pos: self.pos
+
+    FloatLayout:
+        size_hint: 1, 1
+        pos_hint: {"top": 1, "right": 1}
+
+        TextInput:
+            id: message_text
+            name: 'message_text'
+            background_color: (0,0,0,1)
+            foreground_color: (1, 1, 1, 1)
+            font_size: 40
+            hint_text: 'text'
+            size_hint: 1, .5
+            pos_hint: {'top': .98, 'right': 1}
+
+        Label:
+            id: info_label
+            name: "info_label"
+            font_name: 'fonts/Nunito-Bold.ttf'
+            text: ""
+            size_hint: 1, .3
+            pos_hint: {'top': .5, 'left': 1}
+
+        ImageButton:
+            size_hint: .5, .1
+            pos_hint: {"top": .1, "right": .5}
+            source: "icons/projects/back.png"
+            on_release:
+                app.change_screen(app.previous_screen)
+                info_label.text = ''
+
+        ImageButton:
+            size_hint: .5, .1
+            pos_hint: {"top": .1, "right": 1}
+            source: "icons/settings/send.png"
+            on_release:
+                settings.send_support_req(command='message', data=message_text.text)
